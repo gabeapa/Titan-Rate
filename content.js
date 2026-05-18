@@ -1,7 +1,3 @@
-// content.js — TitanRate CSUF v9
-// Table has one row per class. Instructor cell (index 8) contains
-// "FirstName LastName\nFirstName LastName" — we just need the first line.
-
 let injected = new Set();
 let enabled  = true;
 
@@ -34,20 +30,17 @@ function scanPage() {
   const hits = [];
 
   document.querySelectorAll("table").forEach(table => {
-    // Find header row and locate "Instructor" column
     const hrow = table.querySelector("thead tr, tr:first-child");
     if (!hrow) return;
     const headers = [...hrow.querySelectorAll("th, td")];
     const instrIdx = headers.findIndex(h => /^instructor$/i.test(h.textContent.trim()));
     if (instrIdx === -1) return;
 
-    // Each data row — grab cell at instrIdx directly (no colspan issues, simple table)
     table.querySelectorAll("tbody tr, tr:not(:first-child)").forEach((row, rowIdx) => {
       const cells = row.querySelectorAll("td");
       const cell  = cells[instrIdx];
       if (!cell || cell.querySelector(".ps-badge")) return;
 
-      // The cell contains "Name\nName" — take just the first line
       const firstLine = cell.textContent.split(/[\n\r]+/).map(s => s.trim()).filter(Boolean)[0] || "";
       const name = extractName(firstLine);
       if (!name) return;

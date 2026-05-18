@@ -1,7 +1,3 @@
-// background.js — TitanRate CSUF v5.2
-// RMP embeds professor data as a JSON blob in a <script> tag.
-// We find it by locating "avgRating" and extracting the surrounding object.
-
 const CSUF_SCHOOL_ID = "166";
 const cache = {};
 
@@ -35,8 +31,6 @@ async function fetchProfessor(name) {
       });
       const html = await res.text();
 
-      // Extract all teacher objects by finding every "legacyId" occurrence
-      // Each teacher looks like: {"id":"...","legacyId":123,"avgRating":4.8,...}
       const teachers = extractTeachers(html);
       if (!teachers.length) continue;
 
@@ -66,23 +60,19 @@ async function fetchProfessor(name) {
 
 function extractTeachers(html) {
   const teachers = [];
-  // Find every occurrence of "legacyId" — each is inside a teacher object
   let searchFrom = 0;
   while (true) {
     const idx = html.indexOf('"legacyId":', searchFrom);
     if (idx === -1) break;
 
-    // Walk backwards to find the opening { of this object
     const objStart = findObjectStart(html, idx);
     if (objStart === -1) { searchFrom = idx + 1; continue; }
 
-    // Walk forward to find the closing }
     const objEnd = findObjectEnd(html, objStart);
     if (objEnd === -1) { searchFrom = idx + 1; continue; }
 
     try {
       const obj = JSON.parse(html.slice(objStart, objEnd + 1));
-      // Only keep objects that look like teacher records
       if (obj.legacyId && obj.avgRating != null && obj.firstName && obj.lastName) {
         teachers.push(obj);
       }
@@ -93,15 +83,12 @@ function extractTeachers(html) {
   return teachers;
 }
 
-// Walk backwards from pos to find the matching opening brace
 function findObjectStart(html, pos) {
-  // Go back past the key to find the enclosing {
   let i = pos - 1;
   while (i >= 0 && html[i] !== "{") i--;
   return i >= 0 ? i : -1;
 }
 
-// Walk forward from openBrace counting braces to find matching }
 function findObjectEnd(html, openBrace) {
   let depth  = 0;
   let inStr  = false;
