@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "Authorization",
+          "operation": "set",
+          "value": "Basic dGVzdDp0ZXN0"
+        },
+        {
+          "header": "Origin",
+          "operation": "set",
+          "value": "https://www.ratemyprofessors.com"
+        },
+        {
+          "header": "Referer",
+          "operation": "set",
+          "value": "https://www.ratemyprofessors.com/"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "https://www.ratemyprofessors.com/graphql",
+      "resourceTypes": ["xmlhttprequest", "other"]
+    }
+  }
+]
