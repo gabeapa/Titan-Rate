@@ -1,8 +1,9 @@
+
 # TitanRate
 
 > See Rate My Professors ratings without leaving the CSUF enrollment portal.
 
-<img width="352" height="501" alt="545a6ad8ff3706f50a531afe9920eeb6" src="https://github.com/user-attachments/assets/68bbd66f-e6fd-4e0b-81b2-527af1c246b6" />
+<img width="325" height="423" alt="545a6ad8ff3706f50a531afe9920eeb6" src="https://github.com/user-attachments/assets/2e72d5cc-2f73-4494-aec4-fdd2dba2362e" />
 
 
 ---
