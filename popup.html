@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TitanRate</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { width:260px; background:#fafaf8; font-family:'DM Mono',monospace; font-size:12px; color:#222; }
+
+    .header { background:#00244E; padding:14px 18px; display:flex; align-items:center; gap:10px; justify-content: center;}
+    .logo { font-family:'Syne',sans-serif; font-weight:700; font-size:18px; color:#fff; letter-spacing:-0.5px; }
+    .logo span { color:#FF7900; }
+
+    .section { padding:12px 18px; border-bottom:1px solid #eee; }
+    .section-title { font-size:9px; color:#bbb; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+
+    .toggle-row { display:flex; align-items:center; justify-content:space-between; }
+    .toggle { width:36px; height:20px; background:#ddd; border-radius:10px; position:relative; cursor:pointer; border:none; outline:none; transition:background .2s; }
+    .toggle.on { background:#2d9e6b; }
+    .toggle::after { content:''; position:absolute; top:3px; left:3px; width:14px; height:14px; background:#fff; border-radius:50%; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,.2); }
+    .toggle.on::after { transform:translateX(16px); }
+    .status-row { display:flex; align-items:center; gap:5px; margin-top:6px; }
+    .status-dot { width:6px; height:6px; border-radius:50%; background:#2d9e6b; }
+    .status-dot.off { background:#ccc; }
+    .status-text { font-size:10px; color:#888; }
+
+    .legend { display:flex; flex-direction:column; gap:5px; }
+    .legend-row { display:flex; align-items:center; gap:7px; }
+    .dot { width:10px; height:10px; border-radius:2px; border:1.5px solid; flex-shrink:0; }
+    .dot-good { background:#f0fbf6; border-color:#2d9e6b; }
+    .dot-mid  { background:#fffbf0; border-color:#d4950a; }
+    .dot-bad  { background:#fff5f5; border-color:#d94040; }
+    .legend-text { font-size:10px; color:#888; }
+
+    .footer { padding:8px 18px; font-size:9px; color:#ccc; text-align:center; text-transform:uppercase; letter-spacing:.05em; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">Titan<span>Rate</span></div>
+</div>
+
+<div class="section">
+  <div class="section-title">Overlay</div>
+  <div class="toggle-row">
+    <span style="font-size:12px;color:#444">Enabled</span>
+    <button class="toggle on" id="toggle"></button>
+  </div>
+  <div class="status-row">
+    <div class="status-dot" id="status-dot"></div>
+    <span class="status-text" id="status-text">Active on CSUF portal</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Rating Guide</div>
+  <div class="legend">
+    <div class="legend-row"><div class="dot dot-good"></div><span class="legend-text">4.0 – 5.0 · Great</span></div>
+    <div class="legend-row"><div class="dot dot-mid"></div><span class="legend-text">3.0 – 3.9 · Okay</span></div>
+    <div class="legend-row"><div class="dot dot-bad"></div><span class="legend-text">0 – 2.9 · Rough</span></div>
+  </div>
+</div>
+
+<div class="footer">Data from Rate My Professors</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
