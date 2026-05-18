@@ -1,8 +1,7 @@
-/* TitanRate CSUF — injected styles */
-
 /* ── Badge pill ── */
 .ps-badge {
   display: inline-flex;
+  cursor: default;
   align-items: center;
   position: relative;
   margin-left: 6px;
@@ -12,6 +11,7 @@
   line-height: 1;
   border-radius: 5px;
   z-index: 9000;
+  isolation: isolate
 }
 
 .ps-badge.ps-loading {
@@ -36,7 +36,7 @@
 }
 
 .ps-badge.ps-good { border-color: #2d9e6b; background: #f0fbf6; }
-.ps-badge.ps-mid  { border-color: #d4950a; background: #fffbf0; }
+.ps-badge.ps-mid  { border-color: #c9a800; background: #fffbf0; }
 .ps-badge.ps-bad  { border-color: #d94040; background: #fff5f5; }
 
 /* ── Score link ── */
@@ -73,9 +73,12 @@
 
 /* ── Popover ── */
 .ps-popover {
-  display: none;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
   position: absolute;
-  bottom: calc(100% + 9px);
+  bottom: calc(100% + 7px);
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
@@ -84,7 +87,7 @@
   padding: 14px 16px;
   width: 230px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 1px 4px rgba(0,0,0,0.06);
-  z-index: 99999;
+  z-index: 2147483647;
   flex-direction: column;
   gap: 0;
   pointer-events: none;
@@ -92,6 +95,15 @@
 }
 
 /* Arrow */
+.ps-popover::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
 .ps-popover::after {
   content: '';
   position: absolute;
@@ -103,9 +115,11 @@
 }
 
 .ps-badge.ps-ready:hover .ps-popover {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
   pointer-events: all;
   animation: ps-pop-in 0.12s ease-out;
+  isolation: isolate;
 }
 @keyframes ps-pop-in {
   from { opacity: 0; transform: translateX(-50%) translateY(4px); }
@@ -173,18 +187,22 @@
 /* Difficulty bar */
 .ps-diff-bar {
   width: 60px; height: 4px;
-  background: #f0f0f0;
-  border-radius: 2px;
-  overflow: hidden;
+  background: #ebebeb;
+  border-radius: 3px;
   display: inline-block;
   vertical-align: middle;
-  margin-left: 5px;
+  margin-left: 6px;
+  position: relative;
 }
 .ps-diff-fill {
+  position: absolute;
   height: 100%;
-  border-radius: 2px;
-  background: #d4950a;
+  border-radius: 3px;
+  background: #2d9e6b;
 }
+
+.ps-diff-fill.diff-mid { background: #c9a800; }
+.ps-diff-fill.diff-hard { background: #d94040;}
 
 /* Tags */
 .ps-tags {

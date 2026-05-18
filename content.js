@@ -75,6 +75,11 @@ function injectBadge(el, name) {
   badge.innerHTML = `<span class="ps-spinner"></span>`;
   el.appendChild(badge);
 
+  badge.addEventListener("click", e => e.stopPropagation());
+  badge.addEventListener("mouseenter", e => e.stopPropagation());
+  badge.addEventListener("mouseleave", e => e.stopPropagation());
+  badge.addEventListener("mouseover", e => e.stopPropagation());
+
   chrome.runtime.sendMessage({ type: "FETCH_PROFESSOR", name }, prof => {
     if (chrome.runtime.lastError || !prof || prof.avgRating == null) {
       badge.className = "ps-badge ps-notfound";
@@ -85,6 +90,7 @@ function injectBadge(el, name) {
     const rating  = parseFloat(prof.avgRating).toFixed(1);
     const diff    = parseFloat(prof.avgDifficulty).toFixed(1);
     const diffPct = Math.round((prof.avgDifficulty / 5) * 100);
+    const diffCls = prof.avgDifficulty >= 4 ? "diff-hard" : prof.avgDifficulty >= 3 ? "diff-mid" : "";
     const wta     = prof.wouldTakeAgainPercent >= 0
                     ? Math.round(prof.wouldTakeAgainPercent) + "%" : "N/A";
     const n       = prof.numRatings || 0;
@@ -116,7 +122,7 @@ function injectBadge(el, name) {
           <span class="ps-pop-row">
             <span class="ps-pop-lbl">Difficulty</span>
             <span class="ps-pop-val">${diff}/5
-              <span class="ps-diff-bar"><span class="ps-diff-fill" style="width:${diffPct}%"></span></span>
+              <span class="ps-diff-bar"><span class="ps-diff-fill ${diffCls}" style="width:${diffPct}%"></span></span>
             </span>
           </span>
           <span class="ps-pop-row">
